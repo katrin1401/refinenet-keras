@@ -37,7 +37,7 @@ random_crop = None # or None if no random cropping required
 
 # Train settings
 # pre_trained_weights = None
-pre_trained_weights = r'C:\Users\KatrinKostova\OneDrive - Brightcape BV\Documents\Github\refinenet-keras\runs\20200424-150017\weights/weights.02-0.20.hdf5'
+# pre_trained_weights = r'C:\Users\KatrinKostova\OneDrive - Brightcape BV\Documents\Github\refinenet-keras\runs\20200424-150017\weights/weights.02-0.20.hdf5'
 batch_size = 4
 epochs = 25
 lr_init = 0.001 # 1e-4
