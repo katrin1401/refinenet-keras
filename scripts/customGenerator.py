@@ -14,7 +14,7 @@ import os
 import itertools
 from PIL import Image
 import cv2
-
+import progressbar
 from scripts.transformations import augment_image
 
 def one_hot_it(label, label_values):
@@ -80,7 +80,8 @@ class customGenerator:
         while True:
             img_out = np.zeros(((self.batch_size,)+self.target_size+(3,)))
             mask_out = np.zeros(((self.batch_size,)+self.target_size+(self.num_class,)))
-            
+
+            #for i in progressbar.progressbar(range(self.batch_size)):
             for i in range(self.batch_size):
                 img_file, mask_file = next(self.samples)
                 img_path = os.path.join(self.image_path,img_file)
@@ -119,5 +120,5 @@ class customGenerator:
             img_out[:,:,:,0] -= 103.939
             img_out[:,:,:,1] -= 116.779
             img_out[:,:,:,2] -= 123.68
-            
+
             yield(img_out,mask_out)

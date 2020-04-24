@@ -72,5 +72,5 @@ class TensorBoardWrapper(TensorBoard):
             tags[s * tb.shape[0]:(s + 1) * tb.shape[0]] = tb
         
         self.validation_data = [imgs, tags, np.ones(imgs.shape[0]), 0.0]
-              
+
         return super(TensorBoardWrapper, self).on_epoch_end(epoch, logs)

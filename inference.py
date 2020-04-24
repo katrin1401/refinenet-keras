@@ -1,17 +1,27 @@
 import os, cv2
 import numpy as np
 from time import localtime, strftime
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning)
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_VLOG_LEVEL'] = '2'
 
 from keras.preprocessing.image import ImageDataGenerator
 from model.refinenet import build_refinenet
 from scripts.helpers import get_label_info, saveResult
+import progressbar
 
-weights = 'model/refinenet.hdf5'
-input_shape = (512,1024,3) # height x width x channels
+#### Define parameters
+
+weights = r'C:\Users\KatrinKostova\OneDrive - Brightcape BV\Documents\Github\refinenet-keras\runs\20200424-150017\weights/weights.02-0.20.hdf5'
+# input_shape = (512,1024,3) # height x width x channelsand
+input_shape = (384,384,3)
 
 # Define parameters
-input_dir = 'path_to_input'
-class_dict = 'path/class_dict.csv'
+# input_dir = 'path_to_input'
+input_dir = r'C:\Users\KatrinKostova\OneDrive - Brightcape BV\Documents\Scriptie docus\imaterialist-fashion-2019-FGVC6\RefineNet\v11\testing\images'
+class_dict = r'C:\Users\KatrinKostova\OneDrive - Brightcape BV\Documents\Scriptie docus\imaterialist-fashion-2019-FGVC6\RefineNet\v11\class_dict.csv'
 
 def preprocImage(img):
     batch = img[:,:,:,::-1] # RGB to BGR
@@ -69,7 +79,7 @@ with open(os.path.join(output_dir,'settings.txt'), 'w') as f:
     f.write('Weights: {}\n'.format(weights))
 
 # Import classes from csv file
-class_names_list, mask_colors, num_class, class_names_string = get_label_info(class_dict)
+mask_colors, num_class = get_label_info(class_dict)
 
 # Define model and load weights
 model = build_refinenet(input_shape, num_class)
@@ -78,4 +88,5 @@ model.load_weights(weights)
 myTestGenerator = testGenerator(input_dir, input_shape[:2], 2, out_dir = org_dir)
 for batch, file_names in myTestGenerator:
     results = model.predict_on_batch(batch)
+    # results = model.test_on_batch(x, y=None, sample_weight=None, reset_metrics=True)
     saveResult(results, pred_dir, file_names, mask_colors)

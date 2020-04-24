@@ -7,6 +7,7 @@ from time import localtime, strftime
 from contextlib import redirect_stdout
 import cv2
 
+
 def get_label_info(csv_path):
     """
     Retrieve the class names and label values for the selected dataset.
@@ -14,7 +15,7 @@ def get_label_info(csv_path):
 
     # Arguments
         csv_path: The file path of the class dictionairy
-        
+
     # Returns
         Two lists: one for the class names and the other for the label values
     """
@@ -37,8 +38,8 @@ def get_label_info(csv_path):
             class_names_string = class_names_string + class_name + ", "
         else:
             class_names_string = class_names_string + class_name
-    
     return label_values, len(label_values)
+    # return label_values, label_values, len(label_values), class_names_string
     
 def labelVisualize(y_pred, mask_colors):
     """
