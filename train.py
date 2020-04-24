@@ -123,5 +123,5 @@ model.fit_generator(myTrainGen.generator(),
                     validation_data = myValGen.generator(),
                     validation_steps = validation_images // batch_size,
                     epochs = epochs,
-                    callbacks = [model_checkpoint, tbCallBack, lrate, history, save_imgs, tensorboard_callback])
+                    callbacks = [model_checkpoint, tbCallBack, lrate, history, save_imgs])
 
